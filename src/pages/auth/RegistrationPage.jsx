@@ -7,8 +7,8 @@ import {
   Google,
 } from "@mui/icons-material";
 import AuthLayout from "../../components/layout/AuthLayout";
-import InputField from "../../components/ui/InputField";
-import Button from "../../components/ui/Button";
+import InputField from "../../components/common/InputField";
+import Button from "../../components/common/Button";
 import SignUpImage from "../../assets/images/Illustration.png";
 import elips from "../../assets/images/Ellipse.png";
 const RegisterPage = () => {

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { MailOutline, LockOutlined, Google } from "@mui/icons-material";
 import AuthLayout from "../../components/layout/AuthLayout";
-import InputField from "../../components/ui/InputField";
-import Button from "../../components/ui/Button";
+import InputField from "../../components/common/InputField";
+import Button from "../../components/common/Button";
 import LogInImage from "../../assets/images/login.png";
 import elips from "../../assets/images/Ellipse.png";
 const LoginPage = () => {

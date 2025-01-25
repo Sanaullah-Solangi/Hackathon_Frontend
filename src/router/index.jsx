@@ -9,6 +9,8 @@ import {
 import ForgotPasswordPage from "../pages/auth/ForgotPasswordPage";
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegistrationPage";
+import LandingPage from "../pages/auth/LandingPage";
+import LoanForm from "../components/ui/LoanForm";
 // PAGES & COMPONENTS
 function AppRouter() {
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -56,8 +58,16 @@ function AppRouter() {
         </Route>
 
         {/* HOME ROUTES STACK */}
-        <Route path="/" element={<div></div>}>
-          <Route index element />
+        <Route
+          path="/"
+          element={
+            <>
+              <Outlet />
+            </>
+          }
+        >
+          <Route index element={<LandingPage />} />
+          <Route path="apply" element={<LoanForm />} />
           <Route path="hero" element />
           <Route path="services" element />
           <Route path="categories" element />
