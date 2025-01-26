@@ -32,9 +32,8 @@ const ForgotPasswordPage = () => {
       setEmail("");
       message.success(response.message);
       window.location.href = "/";
-
     } catch (error) {
-      message.error(response.message);
+      message.error(error.message);
       console.log(error);
     }
   };

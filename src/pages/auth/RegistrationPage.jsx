@@ -47,7 +47,7 @@ const RegisterPage = () => {
 
       console.log("Registration submitted:", response, formData);
     } catch (error) {
-      message.error(response.message);
+      message.error(error.message);
       console.log(error);
     }
   };
