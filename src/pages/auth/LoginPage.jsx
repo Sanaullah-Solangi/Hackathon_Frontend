@@ -6,6 +6,8 @@ import InputField from "../../components/common/InputField";
 import Button from "../../components/common/Button";
 import LogInImage from "../../assets/images/login.png";
 import elips from "../../assets/images/Ellipse.png";
+import ApiRoutes from "../../constants";
+import { message } from "antd";
 const LoginPage = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -16,8 +18,31 @@ const LoginPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      e.preventDefault();
+      const { username } = formData;
+      let response = await fetch(ApiRoutes.user.login, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      response = await response.json();
+      setFormData({
+        email: "",
+        password: "",
+      });
+      console.log("Registration submitted:", response, formData);
+      message.success(response.message);
+      window.location.href = "/";
+
+    } catch (error) {
+      message.error(response.message);
+      console.log(error);
+    }
     console.log("Login submitted:", formData);
   };
 
@@ -39,7 +64,7 @@ const LoginPage = () => {
             <p className="w-full text-left my-5">
               LogIn to access your eCommerce journey
             </p>
-            <form className="space-y-4" onSubmit={handleSubmit}>
+            <form className="space-y-4 w-full" onSubmit={handleSubmit}>
               <InputField
                 label="Email"
                 type="email"
@@ -61,7 +86,7 @@ const LoginPage = () => {
                 />
                 <div className="flex justify-end mt-1">
                   <Link
-                    to="/forgot-password"
+                    to="/auth/forgotpassword"
                     className="text-sm text-blue-500 hover:text-blue-600"
                   >
                     Forgot?
@@ -78,7 +103,7 @@ const LoginPage = () => {
               <div className="text-center text-sm text-gray-500">
                 Don't have an account?{" "}
                 <Link
-                  to="/register"
+                  to="/auth/signup"
                   className="text-blue-500 hover:text-blue-600"
                 >
                   Sign up

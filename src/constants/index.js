@@ -1,5 +1,5 @@
-const DEV_URL = "http://localhost:5173/";
-const PROD_URL = "https://hackathon-frontend-five-mu.vercel.app/";
+const DEV_URL = "http://localhost:4003/";
+const PROD_URL = "https://hackathon-backend-olive.vercel.app/";
 
 export const BASE_URL = PROD_URL;
 
@@ -15,3 +15,4 @@ export const ApiRoutes = {
     getUser: BASE_URL + "api/user/get-user",
   },
 };
+export default ApiRoutes;

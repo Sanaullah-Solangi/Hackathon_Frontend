@@ -9,8 +9,9 @@ import {
 import ForgotPasswordPage from "../pages/auth/ForgotPasswordPage";
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegistrationPage";
-import LandingPage from "../pages/auth/LandingPage";
+import LandingPage from "../pages/LandingPage";
 import LoanForm from "../components/ui/LoanForm";
+import UpdatePasswordPage from "../pages/auth/UpdatePasswordPage";
 // PAGES & COMPONENTS
 function AppRouter() {
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -23,6 +24,7 @@ function AppRouter() {
           <Route path="signup" element={<RegisterPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="forgotpassword" element={<ForgotPasswordPage />} />
+          <Route path="updatepassword" element={<UpdatePasswordPage />} />
         </Route>
 
         {/* ADMIN ROUTES STACK */}
@@ -67,7 +69,7 @@ function AppRouter() {
           }
         >
           <Route index element={<LandingPage />} />
-          <Route path="apply" element={<LoanForm />} />
+          <Route path="apply/:category/:subcategory" element={<LoanForm />} />
           <Route path="hero" element />
           <Route path="services" element />
           <Route path="categories" element />

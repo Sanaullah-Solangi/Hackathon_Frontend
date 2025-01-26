@@ -7,6 +7,8 @@ import Button from "../../components/common/Button";
 import LogInImage from "../../assets/images/forgotPassword.png";
 
 import elips from "../../assets/images/Ellipse.png";
+import ApiRoutes from "../../constants";
+import { message } from "antd";
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
 
@@ -14,9 +16,27 @@ const ForgotPasswordPage = () => {
     setEmail(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Forgot password submitted:", email);
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      console.log("EMAIL =>", email);
+      let response = await fetch(ApiRoutes.user.forgotPassword, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+      response = await response.json();
+      console.log("Forgot password submitted:", email);
+      setEmail("");
+      message.success(response.message);
+      window.location.href = "/";
+
+    } catch (error) {
+      message.error(response.message);
+      console.log(error);
+    }
   };
 
   return (
@@ -61,7 +81,10 @@ const ForgotPasswordPage = () => {
               </Button>
               <div className="text-center text-sm text-gray-500">
                 Remember your password?{" "}
-                <Link to="/login" className="text-blue-500 hover:text-blue-600">
+                <Link
+                  to="/auth/login"
+                  className="text-blue-500 hover:text-blue-600"
+                >
                   Log in
                 </Link>
               </div>

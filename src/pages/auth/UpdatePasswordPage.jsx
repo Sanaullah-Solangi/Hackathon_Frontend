@@ -6,18 +6,18 @@ import {
   PersonOutline,
   Google,
 } from "@mui/icons-material";
-import AuthLayout from "../../components/layout/AuthLayout";
-import InputField from "../../components/common/InputField";
-import Button from "../../components/common/Button";
+import AuthLayout from "../../components/layout/AuthLayout.jsx";
+import InputField from "../../components/common/InputField.jsx";
+import Button from "../../components/common/Button.jsx";
 import SignUpImage from "../../assets/images/Illustration.png";
 import elips from "../../assets/images/Ellipse.png";
 import { ApiRoutes } from "../../constants/index.js";
 import { message } from "antd";
-const RegisterPage = () => {
+const UpdatePasswordPage = () => {
   const [formData, setFormData] = useState({
-    username: "",
     email: "",
-    cnic: "",
+    newPassword: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e) => {
@@ -27,27 +27,33 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const { username } = formData;
-      console.log("USERNAEM =>", username);
-      let response = await fetch(ApiRoutes.user.register, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      response = await response.json();
-      setFormData({
-        username: "",
-        email: "",
-        cnic: "",
-      });
-      message.success(response.message);
-      window.location.href = "/";
-
-      console.log("Registration submitted:", response, formData);
+      const { newPassword, confirmPassword } = formData;
+      if (newPassword == confirmPassword) {
+        let response = await fetch(ApiRoutes.user.updatePassword, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.confirmPassword,
+          }),
+        });
+        response = await response.json();
+        setFormData({
+          newPassword: "",
+          email: "",
+          confirmPassword: "",
+        });
+        message.success(response.message);
+        window.location.href = "/";
+        console.log("Registration submitted:", response, formData);
+      } else {
+        message.error(
+          "New password and confirmation do not match. Please ensure both fields are identical."
+        );
+      }
     } catch (error) {
-      message.error(response.message);
       console.log(error);
     }
   };
@@ -64,23 +70,19 @@ const RegisterPage = () => {
           />
         </div>
         <div className="md:ml-20 flex flex-col justify-center items-center h-full w-full md:w-[90%] px-10 z-10 ">
-          <h1 className="w-full text-left font-bold text-4xl">SignUp</h1>
-          <p className="w-full text-left my-5">SignUp to Create Your Account</p>
+          <h1 className="w-full text-left font-bold text-4xl">
+            Update Password
+          </h1>
+          <p className="w-full text-left my-5">
+            To continue, please update your password. You will not be able to
+            proceed without updating it.
+          </p>
           {/* REGISTRATION FORM */}
 
           <form
             className="rounded-lg md:w-[100%] w-full flex flex-col justify-center items-center"
             onSubmit={handleSubmit}
           >
-            <InputField
-              label="username"
-              type="text"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              placeholder="Enter your full name"
-              icon={PersonOutline}
-            />
             <InputField
               label="Email"
               type="email"
@@ -91,30 +93,27 @@ const RegisterPage = () => {
               icon={MailOutline}
             />
             <InputField
-              label="cnic"
-              type="number"
-              name="cnic"
-              value={formData.cnic}
+              label="New Password"
+              type="text"
+              name="newPassword"
+              value={formData.newPassword}
               onChange={handleChange}
-              placeholder="Enter your CNIC"
+              placeholder="Enter your Password"
+              icon={PersonOutline}
+            />
+
+            <InputField
+              label="Confirm Password"
+              type="number"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Confirm your Password"
               icon={LockOutlined}
             />
             <Button type="submit" fullWidth>
-              Create account
+              Update Password
             </Button>
-            <Button type="button" variant="google" fullWidth>
-              <Google className="w-5 h-5 mr-2" />
-              Continue with Google
-            </Button>
-            <div className="text-center text-sm text-gray-500">
-              Already have an account?{" "}
-              <Link
-                to="/auth/login"
-                className="text-blue-500 hover:text-blue-600"
-              >
-                Log in
-              </Link>
-            </div>
           </form>
         </div>
       </div>
@@ -122,4 +121,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default UpdatePasswordPage;
