@@ -11,20 +11,20 @@ import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegistrationPage";
 import LandingPage from "../pages/LandingPage";
 import LoanForm from "../components/ui/LoanForm";
-import UpdatePasswordPage from "../pages/auth/UpdatePasswordPage";
+import NavBar from "../components/common/Navbar";
 // PAGES & COMPONENTS
 function AppRouter() {
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
   return (
     <BrowserRouter>
       {/* <ScrollTop /> */}
+      <NavBar />
       <Routes>
         {/* AUTH ROUTES STACK */}
         <Route path="/auth" element={<Outlet />}>
           <Route path="signup" element={<RegisterPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="forgotpassword" element={<ForgotPasswordPage />} />
-          <Route path="updatepassword" element={<UpdatePasswordPage />} />
         </Route>
 
         {/* ADMIN ROUTES STACK */}
@@ -70,6 +70,8 @@ function AppRouter() {
         >
           <Route index element={<LandingPage />} />
           <Route path="apply/:category/:subcategory" element={<LoanForm />} />
+          <Route path="loan-form" element={<LoanForm />} />
+
           <Route path="hero" element />
           <Route path="services" element />
           <Route path="categories" element />
